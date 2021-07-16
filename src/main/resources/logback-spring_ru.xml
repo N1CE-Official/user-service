@@ -1,0 +1,40 @@
+<configuration>
+
+  <appender name="DebugAppender" class="ch.qos.logback.core.FileAppender">
+    <file>C:/log_ru/ru_debug.log</file>
+    <encoder>
+      <pattern>%date  ${LOG_LEVEL_PATTERN:-%5p} [%X{VERSION}] [%X{id_transaction}] [%X{USER}] [%file:%line] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="ErrorAppender" class="ch.qos.logback.core.FileAppender">
+    <file>C:/log_ru/ru_error.log</file>    
+	  <filter class="ch.qos.logback.classic.filter.LevelFilter"> 
+         <level>ERROR</level> 
+         <onMatch>ACCEPT</onMatch> 
+		<onMismatch>DENY</onMismatch>          
+      </filter>    
+    <encoder>
+      <pattern>%date  ${LOG_LEVEL_PATTERN:-%5p} [%X{VERSION}] [%X{id_transaction}] [%X{USER}] [%file:%line] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%date  ${LOG_LEVEL_PATTERN:-%5p} [%X{VERSION}] [%X{id_transaction}] [%X{USER}] [%file:%line] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="ru.ws"  level="DEBUG" additivity="false">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="DebugAppender"/>
+    <appender-ref ref="ErrorAppender"/>
+  </logger>
+
+  <root level="ERROR">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="DebugAppender"/>
+    <appender-ref ref="ErrorAppender"/>
+  </root>
+</configuration>
+
